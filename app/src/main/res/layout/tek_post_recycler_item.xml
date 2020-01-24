@@ -98,17 +98,20 @@
         app:layout_constraintTop_toTopOf="@+id/imgYorum"
         app:srcCompat="@drawable/ic_gonder" />
 
-    <TextView
+    <com.hendraanggrian.widget.SocialTextView
         android:id="@+id/tvKullaniciAdi"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
         android:layout_marginTop="8dp"
-        android:text="TextVsiew"
+        android:text="Kullanıcı adı ve acıklama"
+        android:textColor="@color/siyah"
         android:textStyle="bold"
+        app:hashtagColor="@color/mavi"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/imgBegen"
-        app:layout_constraintTop_toBottomOf="@+id/tvBegeniSayisi" />
+        app:layout_constraintTop_toBottomOf="@+id/tvBegeniSayisi"
+        app:mentionColor="@color/mavi" />
 
     <ProgressBar
         android:id="@+id/pbPostFoto"

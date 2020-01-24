@@ -83,14 +83,16 @@ class HomeFragmentRecyclerAdapter(var myContext: Context, var tumGonderiler: Arr
         fun setData(position: Int, oankiGonderi: UserPost, myContext: Context) {
 
             userNameTitle.text = oankiGonderi.userName
-            var userName = "<font color =#000>" + " " + oankiGonderi.userName + "</font>" + " " + oankiGonderi.postAciklama
+            var userName = oankiGonderi.userName + " " + oankiGonderi.postAciklama
+
+            /*
             var sonuc: Spanned? = null
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
 
                 sonuc = Html.fromHtml(userName, Html.FROM_HTML_MODE_LEGACY)
             }
-
-            userNameVeAciklama.text = sonuc
+*/
+            userNameVeAciklama.text = userName
 
 
             var saat = TimeAgo.getTimeAgo(oankiGonderi.postYuklenmeTarihi!!)

@@ -16,7 +16,6 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:name="com.creativeoffice.VideoRecyclerView.view.App"
         android:theme="@style/AppTheme">
         <activity android:name="com.creativeoffice.Generic.UserProfileActivity"></activity>
         <activity android:name="com.creativeoffice.Login.RegisterActivity" />

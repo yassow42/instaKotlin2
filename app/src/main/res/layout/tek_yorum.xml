@@ -16,12 +16,14 @@
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/common_google_signin_btn_icon_dark_normal" />
 
-    <TextView
+    <com.hendraanggrian.widget.SocialTextView
         android:id="@+id/tvUserAciklama"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="8dp"
+        app:hashtagColor="@color/mavi"
+        app:mentionColor="@color/mavi"
         android:textColor="@color/siyah"
         app:layout_constraintEnd_toStartOf="@+id/imgYorumLike"
         app:layout_constraintStart_toEndOf="@+id/yorumYapanProfilPhoto"

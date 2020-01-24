@@ -96,7 +96,7 @@
             app:layout_constraintTop_toTopOf="parent"
             android:scaleType="fitXY"/>
 
-        <EditText
+        <com.hendraanggrian.widget.SocialEditText
             android:id="@+id/etPostAciklama"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -105,6 +105,8 @@
             android:background="@null"
             android:ems="10"
             android:hint="Bir Açıklama Yazınız..."
+            app:hashtagColor="@color/mavi"
+            app:mentionColor="@color/mavi"
             android:inputType="textMultiLine"
             app:layout_constraintBottom_toBottomOf="@+id/imgNextFragment"
             app:layout_constraintEnd_toEndOf="parent"
