@@ -1,0 +1,65 @@
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.creativeoffice.Share.ShareGalleryFragment">
+
+
+    <FrameLayout
+        android:id="@+id/frameLayoutRoot"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <com.otaliastudios.cameraview.CameraView
+            android:id="@+id/FotoCameraViewHome"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:keepScreenOn="true"
+            app:cameraPlaySounds="true"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+
+        </com.otaliastudios.cameraview.CameraView>
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/tasiyici"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:layout_gravity="bottom">
+
+
+            <ImageView
+                android:id="@+id/imgFotoCek"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:src="@drawable/foto_cek_yuvarlak"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"></ImageView>
+
+            <ImageView
+                android:id="@+id/imgCameraSwitch"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:layout_marginStart="16dp"
+                app:layout_constraintBottom_toBottomOf="@+id/imgFotoCek"
+                app:layout_constraintStart_toEndOf="@+id/imgFotoCek"
+                app:layout_constraintTop_toTopOf="@+id/imgFotoCek"
+                app:srcCompat="@drawable/ic_kamera_switch">
+
+            </ImageView>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </FrameLayout>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

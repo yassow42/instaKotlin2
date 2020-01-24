@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root>
+  <item name="android.support.v4.media.session.MediaControllerCompat.Callback void onRepeatModeChanged(int) 0">
+    <annotation name="androidx.annotation.IntDef">
+      <val name="value" val="{android.support.v4.media.session.PlaybackStateCompat.REPEAT_MODE_INVALID, android.support.v4.media.session.PlaybackStateCompat.REPEAT_MODE_NONE, android.support.v4.media.session.PlaybackStateCompat.REPEAT_MODE_ONE, android.support.v4.media.session.PlaybackStateCompat.REPEAT_MODE_ALL, android.support.v4.media.session.PlaybackStateCompat.REPEAT_MODE_GROUP}" />
+    </annotation>
+  </item>
+  <item name="android.support.v4.media.session.MediaControllerCompat.Callback void onShuffleModeChanged(int) 0">
+    <annotation name="androidx.annotation.IntDef">
+      <val name="value" val="{android.support.v4.media.session.PlaybackStateCompat.SHUFFLE_MODE_INVALID, android.support.v4.media.session.PlaybackStateCompat.SHUFFLE_MODE_NONE, android.support.v4.media.session.PlaybackStateCompat.SHUFFLE_MODE_ALL, android.support.v4.media.session.PlaybackStateCompat.SHUFFLE_MODE_GROUP}" />
+    </annotation>
+  </item>
+  <item name="android.support.v4.media.session.MediaControllerCompat.TransportControls void setRepeatMode(int) 0">
+    <annotation name="androidx.annotation.IntDef">
+      <val name="value" val="{android.support.v4.media.session.PlaybackStateCompat.REPEAT_MODE_INVALID, android.support.v4.media.session.PlaybackStateCompat.REPEAT_MODE_NONE, android.support.v4.media.session.PlaybackStateCompat.REPEAT_MODE_ONE, android.support.v4.media.session.PlaybackStateCompat.REPEAT_MODE_ALL, android.support.v4.media.session.PlaybackStateCompat.REPEAT_MODE_GROUP}" />
+    </annotation>
+  </item>
+  <item name="android.support.v4.media.session.MediaControllerCompat.TransportControls void setShuffleMode(int) 0">
+    <annotation name="androidx.annotation.IntDef">
+      <val name="value" val="{android.support.v4.media.session.PlaybackStateCompat.SHUFFLE_MODE_INVALID, android.support.v4.media.session.PlaybackStateCompat.SHUFF

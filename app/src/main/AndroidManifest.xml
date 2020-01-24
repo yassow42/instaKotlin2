@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:dist="http://schemas.android.com/apk/distribution"
+    package="com.creativeoffice.instakotlin2">
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+
+    <dist:module dist:instant="true" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:name="com.creativeoffice.VideoRecyclerView.view.App"
+        android:theme="@style/AppTheme">
+        <activity android:name="com.creativeoffice.Generic.UserProfileActivity"></activity>
+        <activity android:name="com.creativeoffice.Login.RegisterActivity" />
+        <activity android:name="com.creativeoffice.Login.LoginActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+
+        </activity>
+        <activity android:name="com.creativeoffice.Profile.ProfileSettingActivity" />
+        <activity android:name="com.creativeoffice.Share.ShareActivity" />
+        <activity android:name="com.creativeoffice.Search.SearchActivity" />
+        <activity android:name="com.creativeoffice.Profile.ProfileActivity" />
+        <activity android:name="com.creativeoffice.News.NewsActivity" />
+        <activity android:name="com.creativeoffice.Home.HomeActivity">
+
+        </activity>
+    </application>
+
+</manifest>

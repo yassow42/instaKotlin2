@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root>
+  <item name="androidx.media.AudioAttributesCompat int getUsage()">
+    <annotation name="androidx.annotation.IntDef">
+      <val name="value" val="{androidx.media.AudioAttributesCompat.USAGE_UNKNOWN, androidx.media.AudioAttributesCompat.USAGE_MEDIA, androidx.media.AudioAttributesCompat.USAGE_VOICE_COMMUNICATION, androidx.media.AudioAttributesCompat.USAGE_VOICE_COMMUNICATION_SIGNALLING, androidx.media.AudioAttributesCompat.USAGE_ALARM, androidx.media.AudioAttributesCompat.USAGE_NOTIFICATION, androidx.media.AudioAttributesCompat.USAGE_NOTIFICATION_RINGTONE, androidx.media.AudioAttributesCompat.USAGE_NOTIFICATION_COMMUNICATION_REQUEST, androidx.media.AudioAttributesCompat.USAGE_NOTIFICATION_COMMUNICATION_INSTANT, androidx.media.AudioAttributesCompat.USAGE_NOTIFICATION_COMMUNICATION_DELAYED, androidx.media.AudioAttributesCompat.USAGE_NOTIFICATION_EVENT, androidx.media.AudioAttributesCompat.USAGE_ASSISTANCE_ACCESSIBILITY, androidx.media.AudioAttributesCompat.USAGE_ASSISTANCE_NAVIGATION_GUIDANCE, androidx.media.AudioAttributesCompat.USAGE_ASSISTANCE_SONIFICATION, androidx.media.AudioAttributesCompat.USAGE_GAME, androidx.media.AudioAttributesCompat.USAGE_ASSISTANT}" />
+    </annotation>
+  </item>
+  <item name="androidx.media.AudioAttributesCompat int toVolumeStreamType(boolean, int, int) 2">
+    <annotation name="androidx.annotation.IntDef">
+      <val name="value" val="{androidx.media.AudioAttributesCompat.USAGE_UNKNOWN, androidx.media.AudioAttributesCompat.USAGE_MEDIA, androidx.media.AudioAttributesCompat.USAGE_VOICE_COMMUNICATION, androidx.media.AudioAttributesCompat.USAGE_VOICE_COMMUNICATION_SIGNALLING, androidx.media.AudioAttributesCompat.USAGE_ALARM, androidx.media.AudioAttributesCompat.USAGE_NOTIFICATION, androidx.media.AudioAttributesCompat.USAGE_NOTIFICATION_RINGTONE, androidx.media.AudioAttributesCompat.USAGE_NOTIFICATION_COMMUNICATION_REQUEST, androidx.media.AudioAttributesCompat.USAGE_NOTIFICATION_COMMUNICATION_INSTANT, androidx.media.AudioAttributesCompat.USAGE_NOTIFICATION_COMMUNICATION_DELAYED, androidx.media.AudioAttributesCompat.USAGE_NOTIFICATION_EVENT, androidx.media.AudioAttributesCompat.USAGE_ASSISTANCE_ACCESSIBILITY, androidx.media.AudioAttributesCompat.USAGE_ASSISTANCE_NAVIGATION_GUIDANCE, androidx.media.AudioAttributesCompat.USAGE_ASSISTANCE_SONIFICATION, androidx.media.AudioAttributesCompat.USAGE_GAME, androidx.media.AudioAttributesCompat.USAGE_ASSISTANT}" />
+    </annotation>
+  </item>
+  <item name="androidx.media.AudioAttributesCompat.AttributeContentType">
+    <annotation name="androidx.annotation.IntDef">
+      <val name="value" val="{androidx.media.AudioAttributesCompat.CONTENT_TYPE_UNKNOWN, androidx.media.AudioAttributesCompat.CONTENT_TYPE_SPEECH, androidx.media.A

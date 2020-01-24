@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/yorumYapanProfilPhoto"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/common_google_signin_btn_icon_dark_normal" />
+
+    <TextView
+        android:id="@+id/tvUserAciklama"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="8dp"
+        android:textColor="@color/siyah"
+        app:layout_constraintEnd_toStartOf="@+id/imgYorumLike"
+        app:layout_constraintStart_toEndOf="@+id/yorumYapanProfilPhoto"
+        app:layout_constraintTop_toTopOf="@+id/yorumYapanProfilPhoto" />
+
+    <TextView
+        android:id="@+id/tvYorumZaman"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="3g"
+        app:layout_constraintStart_toStartOf="@+id/tvUserAciklama"
+        app:layout_constraintTop_toBottomOf="@+id/tvUserAciklama" />
+
+    <TextView
+        android:id="@+id/tvBegeniSayi"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:text="35 begenme"
+        app:layout_constraintBottom_toBottomOf="@+id/tvYorumZaman"
+        app:layout_constraintStart_toEndOf="@+id/tvYorumZaman"
+        app:layout_constraintTop_toTopOf="@+id/tvYorumZaman" />
+
+
+    <ImageView
+        android:id="@+id/imgYorumLike"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        app:layout_constraintBottom_toBottomOf="@+id/tvUserAciklama"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/tvUserAciklama"
+        app:srcCompat="@drawable/ic_begen" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        android:background="@color/golgelik"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvBegeniSayi"></View>
+</androidx.constraintlayout.widget.ConstraintLayout>
