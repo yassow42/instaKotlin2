@@ -27,4 +27,89 @@
         app:layout_constraintBottom_toBottomOf="@+id/imageView3"
         app:layout_constraintStart_toEndOf="@+id/imageView3"
         app:layout_constraintTop_toTopOf="@+id/imageView3" />
+
+    <View
+        android:id="@+id/view11"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="8dp"
+        android:background="@color/golgelik"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvSohbetEdilecekKullanici" />
+
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerView2"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="1dp"
+        android:layout_marginEnd="1dp"
+        app:layout_constraintBottom_toTopOf="@+id/view7"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/view11" />
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/mesajCircleimg"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+
+    </de.hdodenhof.circleimageview.CircleImageView>
+
+    <com.hendraanggrian.widget.SocialAutoCompleteTextView
+        android:id="@+id/etMesaj"
+        android:layout_width="0dp"
+        android:layout_height="35dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:hint="Mesajın"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toBottomOf="@+id/mesajCircleimg"
+        app:layout_constraintEnd_toStartOf="@+id/tvBtnGonder"
+        app:layout_constraintStart_toEndOf="@+id/mesajCircleimg"
+        app:layout_constraintTop_toTopOf="@+id/mesajCircleimg" />
+
+    <TextView
+        android:id="@+id/tvBtnGonder"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:text="Gönder"
+        android:textColor="@color/mavi"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="@+id/etMesaj"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/etMesaj" />
+
+
+    <View
+        android:id="@+id/view7"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginBottom="8dp"
+        android:background="@color/golgelik"
+        app:layout_constraintBottom_toTopOf="@+id/etMesaj"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"/>
+
+    <ProgressBar
+        android:id="@+id/mesajCirclePB"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="10dp"
+        android:layout_height="10dp"
+        app:layout_constraintBottom_toBottomOf="@+id/mesajCircleimg"
+        app:layout_constraintEnd_toEndOf="@+id/mesajCircleimg"
+        app:layout_constraintStart_toStartOf="@+id/mesajCircleimg"
+        app:layout_constraintTop_toTopOf="@+id/mesajCircleimg" />
+
+
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>
