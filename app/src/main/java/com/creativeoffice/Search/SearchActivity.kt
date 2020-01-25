@@ -27,14 +27,14 @@ class SearchActivity : AppCompatActivity() {
     private val TAG = "SearchActivity"
 
     var tumGonderilerr = ArrayList<Posts>()
- //   lateinit var tumKullanicilar: NewUser
+
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_search)
 
-     //   tumGonderilerr = ArrayList()
+
 
         setupNavigationView()
         setupRecyclerView()
@@ -65,7 +65,7 @@ class SearchActivity : AppCompatActivity() {
                     if (tumKullanicilar.user_name!!.equals(searchView.text.toString())) {
 
                         var userID=tumKullanicilar.user_id!!
-                        Log.e("userIDD", tumKullanicilar.user_id!!)
+                       //Log.e("userIDD", tumKullanicilar.user_id!!)
 
                         //   EventBus.getDefault().postSticky(EventbusDataEvents.kullaniciIDgonder(tumKullanicilar.user_id))
 

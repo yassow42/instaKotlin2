@@ -117,7 +117,7 @@ class HomeFragment : Fragment() {
                         override fun onDataChange(p0: DataSnapshot) {
 
                             if (p0.hasChildren()) {
-                                Log.e("takip ettiklerinin post", kullaniciID+"kişinin fotosu var")
+                             //   Log.e("takip ettiklerinin post", kullaniciID+" kişinin fotosu var")
 
                                 for (ds in p0.children) {
                                     var eklenecekUserPost = UserPost() //boş contructer olusturdugumuz ıcın bu hata vermiyor.

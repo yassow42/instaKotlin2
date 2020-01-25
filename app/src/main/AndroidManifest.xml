@@ -2,6 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:dist="http://schemas.android.com/apk/distribution"
     package="com.creativeoffice.instakotlin2">
+
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
@@ -17,7 +18,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name="com.creativeoffice.Generic.UserProfileActivity"></activity>
+        <activity android:name="com.creativeoffice.Home.ChatActivity"></activity>
+        <activity android:name="com.creativeoffice.Generic.UserProfileActivity" />
         <activity android:name="com.creativeoffice.Login.RegisterActivity" />
         <activity android:name="com.creativeoffice.Login.LoginActivity">
             <intent-filter>
@@ -25,16 +27,13 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
         </activity>
         <activity android:name="com.creativeoffice.Profile.ProfileSettingActivity" />
         <activity android:name="com.creativeoffice.Share.ShareActivity" />
         <activity android:name="com.creativeoffice.Search.SearchActivity" />
         <activity android:name="com.creativeoffice.Profile.ProfileActivity" />
         <activity android:name="com.creativeoffice.News.NewsActivity" />
-        <activity android:name="com.creativeoffice.Home.HomeActivity">
-
-        </activity>
+        <activity android:name="com.creativeoffice.Home.HomeActivity"></activity>
     </application>
 
 </manifest>
