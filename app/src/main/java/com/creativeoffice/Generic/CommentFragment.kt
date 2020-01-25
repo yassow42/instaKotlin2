@@ -25,6 +25,8 @@ import com.firebase.ui.database.FirebaseRecyclerOptions
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.*
+import com.hendraanggrian.widget.Mention
+import com.hendraanggrian.widget.MentionAdapter
 import kotlinx.android.synthetic.main.fragment_comment.*
 import kotlinx.android.synthetic.main.fragment_comment.view.*
 import kotlinx.android.synthetic.main.tek_yorum.view.*
@@ -60,6 +62,40 @@ class CommentFragment : Fragment() {
         fragmentView.imgBack.setOnClickListener {
             activity!!.onBackPressed()
         }
+
+        var mymentionAdapter = MentionAdapter(activity!!,R.drawable.ic_profile_logo)
+        fragmentView.etYorum.setMentionTextChangedListener { view, s ->
+
+            FirebaseDatabase.getInstance().reference.child("users").orderByChild("user_name").startAt(s).endAt(s+"\uf8ff")
+                .addListenerForSingleValueEvent(object : ValueEventListener {
+                    override fun onCancelled(p0: DatabaseError) {}
+                    override fun onDataChange(p0: DataSnapshot) {
+
+                        if (p0.value != null) {
+                            for (user in p0.children) {
+                                mymentionAdapter.clear()
+                                var okunanKullanici = user.getValue(Users::class.java)
+                                var username = okunanKullanici!!.user_name.toString()
+                                var adiSoyadi = okunanKullanici!!.adi_soyadi.toString()
+                                var photo = okunanKullanici!!.user_detail!!.profile_picture
+                                if (!photo.isNullOrEmpty()) {
+                                    mymentionAdapter.add(Mention(username, adiSoyadi,photo))
+
+                                }else{
+                                    mymentionAdapter.add(Mention(username, adiSoyadi,R.drawable.ic_profile_logo))
+
+                                }
+                            }
+
+
+                        }
+                    }
+
+                })
+        }
+
+        fragmentView.etYorum.mentionAdapter = mymentionAdapter
+
 
         setupCommentsRecyclerView()
         setupPaylasButton()
@@ -152,17 +188,19 @@ class CommentFragment : Fragment() {
                 }
 
                 override fun onDataChange(p0: DataSnapshot) {
-                    var userName = "<font color =#000000>" + " " + p0.getValue(Users::class.java)!!.user_name.toString() + "</font>" + " " + yorum
+                    var userName = p0.getValue(Users::class.java)!!.user_name
+                    var userNameveAciklama =  userName.toString()+  " " + yorum +""
+                    /*
                     var sonuc: Spanned? = null
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
 
                         sonuc = Html.fromHtml(userName, Html.FROM_HTML_MODE_LEGACY)
                     }
+*/
 
+                    tvUserveAciklama.text = userNameveAciklama+""
 
-                    tvUserveAciklama.text = sonuc
-
-                    var imgUrl = p0!!.getValue(Users::class.java)!!.user_detail!!.profile_picture
+                    var imgUrl = p0.getValue(Users::class.java)!!.user_detail!!.profile_picture
                     UniversalImageLoader.setImage(imgUrl.toString(), profileImg, null)
                 }
             })
@@ -198,7 +236,7 @@ class CommentFragment : Fragment() {
                 override fun onDataChange(p0: DataSnapshot) {
                     if (p0.exists()) { //begenenler dugumu altında value varsa devreye girer
                         yorumBegenmeSayisi.visibility = View.VISIBLE
-                        yorumBegenmeSayisi.text = p0!!.childrenCount.toString()+" beğenme"
+                        yorumBegenmeSayisi.text = p0!!.childrenCount.toString() + " beğenme"
                     } else {
                         yorumBegenmeSayisi.visibility = View.INVISIBLE
                     }

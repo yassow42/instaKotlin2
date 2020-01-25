@@ -181,7 +181,7 @@ class UserProfileActivity : AppCompatActivity() {
 
                         //postSayisiGüncelle
                         var postSayisi = p0.childrenCount.toInt().toString()
-                        FirebaseDatabase.getInstance().reference.child("users").child(kullaniciID).child("user_detail").child("post").setValue(postSayisi)
+                        FirebaseDatabase.getInstance().reference.child("users").child(kullaniciID).child("user_detail").child("post").setValue(postSayisi.toString())
 
                         if (p0.hasChildren()) {
 
