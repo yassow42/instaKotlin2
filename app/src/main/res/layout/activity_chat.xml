@@ -6,6 +6,18 @@
     android:layout_height="match_parent"
     tools:context="com.creativeoffice.Home.ChatActivity">
 
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/mesajTitleCircleimg"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginStart="8dp"
+        app:layout_constraintBottom_toBottomOf="@+id/imageView3"
+        app:layout_constraintStart_toEndOf="@+id/imageView3"
+        app:layout_constraintTop_toTopOf="@+id/imageView3">
+
+
+    </de.hdodenhof.circleimageview.CircleImageView>
+
     <ImageView
         android:id="@+id/imageView3"
         android:layout_width="wrap_content"
@@ -24,9 +36,9 @@
         android:text="TextView"
         android:textColor="@color/siyah"
         android:textSize="16sp"
-        app:layout_constraintBottom_toBottomOf="@+id/imageView3"
-        app:layout_constraintStart_toEndOf="@+id/imageView3"
-        app:layout_constraintTop_toTopOf="@+id/imageView3" />
+        app:layout_constraintBottom_toBottomOf="@+id/mesajTitleCircleimg"
+        app:layout_constraintStart_toEndOf="@+id/mesajTitleCircleimg"
+        app:layout_constraintTop_toTopOf="@+id/mesajTitleCircleimg" />
 
     <View
         android:id="@+id/view11"
@@ -36,11 +48,11 @@
         android:background="@color/golgelik"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvSohbetEdilecekKullanici" />
+        app:layout_constraintTop_toBottomOf="@+id/mesajTitleCircleimg" />
 
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerView2"
+        android:id="@+id/rvSohbet"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginStart="1dp"
@@ -53,8 +65,8 @@
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/mesajCircleimg"
-        android:layout_width="35dp"
-        android:layout_height="35dp"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
         android:layout_marginStart="16dp"
         android:layout_marginBottom="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -63,7 +75,7 @@
 
     </de.hdodenhof.circleimageview.CircleImageView>
 
-    <com.hendraanggrian.widget.SocialAutoCompleteTextView
+    <EditText
         android:id="@+id/etMesaj"
         android:layout_width="0dp"
         android:layout_height="35dp"
@@ -72,12 +84,12 @@
         android:hint="Mesajın"
         android:textSize="14sp"
         app:layout_constraintBottom_toBottomOf="@+id/mesajCircleimg"
-        app:layout_constraintEnd_toStartOf="@+id/tvBtnGonder"
+        app:layout_constraintEnd_toStartOf="@+id/tvMesajGonderBtn"
         app:layout_constraintStart_toEndOf="@+id/mesajCircleimg"
         app:layout_constraintTop_toTopOf="@+id/mesajCircleimg" />
 
     <TextView
-        android:id="@+id/tvBtnGonder"
+        android:id="@+id/tvMesajGonderBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
