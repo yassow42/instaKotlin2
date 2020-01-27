@@ -9,6 +9,7 @@ import android.widget.LinearLayout
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.creativeoffice.Models.Mesaj
 import com.creativeoffice.instakotlin2.R
+import com.creativeoffice.utils.MesajRecyclerViewAdapter
 import com.creativeoffice.utils.UniversalImageLoader
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
@@ -22,7 +23,7 @@ class ChatActivity : AppCompatActivity() {
     lateinit var mRef: DatabaseReference
     var sohbetEdilecekUserID = ""
     var mesajGonderenUserID = ""
-    lateinit var tumMesajlar: ArrayList<Mesaj>
+    var tumMesajlar: ArrayList<Mesaj> = ArrayList()
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -84,7 +85,7 @@ class ChatActivity : AppCompatActivity() {
 
     private fun MesajlariGetir() {
 
-        tumMesajlar = ArrayList<Mesaj>()
+        tumMesajlar.clear()
         mRef.child("mesajlar").child(mesajGonderenUserID).child(sohbetEdilecekUserID).addValueEventListener(object : ValueEventListener {
             override fun onCancelled(p0: DatabaseError) {
 
@@ -93,7 +94,7 @@ class ChatActivity : AppCompatActivity() {
             override fun onDataChange(p0: DataSnapshot) {
 
                 if (p0.value != null) {
-                    for (mesaj in p0.children){
+                    for (mesaj in p0.children) {
                         var okunanMesaj = mesaj.getValue(Mesaj::class.java)
                         tumMesajlar.add(okunanMesaj!!)
                     }
@@ -109,12 +110,14 @@ class ChatActivity : AppCompatActivity() {
     }
 
     private fun setupMesajlarRecyclerView() {
-        var myLinearLayoutManager = LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false)
+        var myLinearLayoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+        myLinearLayoutManager.stackFromEnd = true
         var myRecyclerView = rvSohbet
         myRecyclerView.layoutManager = myLinearLayoutManager
 
+        var myAdapter = MesajRecyclerViewAdapter(this, tumMesajlar)
 
-
+        myRecyclerView.adapter = myAdapter
 
 
     }
