@@ -7,6 +7,7 @@ import android.renderscript.Sampler
 import android.util.Log
 import android.widget.LinearLayout
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.creativeoffice.Models.Mesaj
 import com.creativeoffice.instakotlin2.R
 import com.creativeoffice.utils.MesajRecyclerViewAdapter
@@ -24,6 +25,8 @@ class ChatActivity : AppCompatActivity() {
     var sohbetEdilecekUserID = ""
     var mesajGonderenUserID = ""
     var tumMesajlar: ArrayList<Mesaj> = ArrayList()
+    lateinit var myRecyclerViewAdapter:MesajRecyclerViewAdapter
+   lateinit var myRecyclerView:RecyclerView
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -34,13 +37,14 @@ class ChatActivity : AppCompatActivity() {
         mRef = FirebaseDatabase.getInstance().reference
         mUser = mAuth.currentUser!!
         mesajGonderenUserID = mUser.uid
+        myRecyclerView = rvSohbet
 
 
         var gelenVeri = intent.extras
         sohbetEdilecekUserID = gelenVeri!!.getString("secilenUserID")!!
         sohbetEdilenKisiyiBul(sohbetEdilecekUserID)
 
-
+        setupMesajlarRecyclerView() // bunu burda cagırdık cunku kısıyı bulduktan sonra recyclerViewi olustursun
         MesajlariGetir()
         tvMesajGonderBtn.setOnClickListener {
 
@@ -86,7 +90,9 @@ class ChatActivity : AppCompatActivity() {
     private fun MesajlariGetir() {
 
         tumMesajlar.clear()
-        mRef.child("mesajlar").child(mesajGonderenUserID).child(sohbetEdilecekUserID).addValueEventListener(object : ValueEventListener {
+
+/*
+       mRef.child("mesajlar").child(mesajGonderenUserID).child(sohbetEdilecekUserID).addValueEventListener(object : ValueEventListener {
             override fun onCancelled(p0: DatabaseError) {
 
             }
@@ -95,8 +101,7 @@ class ChatActivity : AppCompatActivity() {
 
                 if (p0.value != null) {
                     for (mesaj in p0.children) {
-                        var okunanMesaj = mesaj.getValue(Mesaj::class.java)
-                        tumMesajlar.add(okunanMesaj!!)
+
                     }
 
                     setupMesajlarRecyclerView()
@@ -106,18 +111,46 @@ class ChatActivity : AppCompatActivity() {
             }
         })
 
+*/
+        mRef.child("mesajlar").child(mesajGonderenUserID).child(sohbetEdilecekUserID).addChildEventListener(object :ChildEventListener{
+            override fun onCancelled(p0: DatabaseError) {
+
+            }
+
+            override fun onChildMoved(p0: DataSnapshot, p1: String?) {
+
+            }
+
+            override fun onChildChanged(p0: DataSnapshot, p1: String?) {
+
+            }
+
+            override fun onChildAdded(p0: DataSnapshot, p1: String?) {
+                var okunanMesaj = p0.getValue(Mesaj::class.java)
+                tumMesajlar.add(okunanMesaj!!)
+
+                myRecyclerViewAdapter.notifyItemInserted(tumMesajlar.size-1)
+                myRecyclerView.scrollToPosition(tumMesajlar.size-1)
+            }
+
+            override fun onChildRemoved(p0: DataSnapshot) {
+
+            }
+
+        })
+
 
     }
 
     private fun setupMesajlarRecyclerView() {
         var myLinearLayoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         myLinearLayoutManager.stackFromEnd = true
-        var myRecyclerView = rvSohbet
+        myRecyclerView = rvSohbet
         myRecyclerView.layoutManager = myLinearLayoutManager
 
-        var myAdapter = MesajRecyclerViewAdapter(this, tumMesajlar)
+        myRecyclerViewAdapter = MesajRecyclerViewAdapter(this, tumMesajlar)
 
-        myRecyclerView.adapter = myAdapter
+        myRecyclerView.adapter = myRecyclerViewAdapter
 
 
     }

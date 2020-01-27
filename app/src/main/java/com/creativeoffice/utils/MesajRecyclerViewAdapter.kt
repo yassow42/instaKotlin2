@@ -23,16 +23,18 @@ class MesajRecyclerViewAdapter(var myContext: Context, var tumMesajlar: ArrayLis
 
         if (viewType == 1) {
             myView = LayoutInflater.from(myContext).inflate(R.layout.tek_satir_mesaj_gonderen, parent, false)
-        } else if (viewType == 2) {
+            return MyMesajViewHolder(myView)
+        } else {
+            myView = LayoutInflater.from(myContext).inflate(R.layout.tek_satir_mesaj_alan, parent, false)
 
-            myView = LayoutInflater.from(myContext).inflate(R.layout.tek_satir_mesaj_gonderen, parent, false)
+            return MyMesajViewHolder(myView)
         }
 
 
 
 
 
-        return MyMesajViewHolder(myView)
+
     }
 
     override fun getItemCount(): Int {
@@ -48,7 +50,9 @@ class MesajRecyclerViewAdapter(var myContext: Context, var tumMesajlar: ArrayLis
     override fun getItemViewType(position: Int): Int {
         if (tumMesajlar.get(position).user_id!!.equals(FirebaseAuth.getInstance().currentUser!!.uid)) {
             return 1
-        } else return 2
+        } else{
+            return 2
+        }
 
     }
 
