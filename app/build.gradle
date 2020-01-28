@@ -74,5 +74,6 @@ dependencies {
     // optional
     //sayfa pull or refresh
     implementation 'com.dinuscxj:recyclerrefreshlayout:2.0.5'
+
 }
 apply plugin: 'com.google.gms.google-services'

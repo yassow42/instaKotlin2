@@ -12,6 +12,7 @@ import com.creativeoffice.Models.Mesaj
 import com.creativeoffice.instakotlin2.R
 import com.creativeoffice.utils.MesajRecyclerViewAdapter
 import com.creativeoffice.utils.UniversalImageLoader
+import com.dinuscxj.refresh.RecyclerRefreshLayout
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.*
@@ -25,9 +26,18 @@ class ChatActivity : AppCompatActivity() {
     var sohbetEdilecekUserID = ""
     var mesajGonderenUserID = ""
     var tumMesajlar: ArrayList<Mesaj> = ArrayList()
-    lateinit var myRecyclerViewAdapter:MesajRecyclerViewAdapter
-   lateinit var myRecyclerView:RecyclerView
+    lateinit var myRecyclerViewAdapter: MesajRecyclerViewAdapter
+    lateinit var myRecyclerView: RecyclerView
 
+    //sayfalama icin
+    val sayfaBasiGonderiSayisi = 5
+    var sayfaNumarasi = 1
+
+    var mesajPosition = 0
+    var dahaFazlaMesajPosition = 0
+    var ilkGetirilenMesajID = ""
+    lateinit var childEventListener: ChildEventListener
+    lateinit var childListenerDahaFazla: ChildEventListener
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,8 +54,23 @@ class ChatActivity : AppCompatActivity() {
         sohbetEdilecekUserID = gelenVeri!!.getString("secilenUserID")!!
         sohbetEdilenKisiyiBul(sohbetEdilecekUserID)
 
-        setupMesajlarRecyclerView() // bunu burda cagırdık cunku kısıyı bulduktan sonra recyclerViewi olustursun
+        setupMesajlarRecyclerView() //  recyclerViewi olustursun
         MesajlariGetir()
+        refreshLayout.setOnRefreshListener(object : RecyclerRefreshLayout.OnRefreshListener {
+
+            override fun onRefresh() {
+                sayfaNumarasi++
+                dahaFazlaMesajPosition=0
+               // mRef.child("mesajlar").child(mesajGonderenUserID).child(sohbetEdilecekUserID).removeEventListener(childEventListener)
+                dahaFazlaMesajGetir()
+
+
+
+                refreshLayout.setRefreshing(false)
+            }
+
+        })
+
         tvMesajGonderBtn.setOnClickListener {
 
             var mesajText = etMesaj.text.toString()
@@ -56,7 +81,9 @@ class ChatActivity : AppCompatActivity() {
             mesajAtan.put("type", "text")
             mesajAtan.put("user_id", mesajGonderenUserID)
 
-            mRef.child("mesajlar").child(mesajGonderenUserID).child(sohbetEdilecekUserID).push().setValue(mesajAtan)
+
+            var yeniMesajKey = mRef.child("mesajlar").child(mesajGonderenUserID).child(sohbetEdilecekUserID).push().key
+            mRef.child("mesajlar").child(mesajGonderenUserID).child(sohbetEdilecekUserID).child(yeniMesajKey.toString()).setValue(mesajAtan)
 
 
             var mesajAlan = HashMap<String, Any>()
@@ -68,7 +95,7 @@ class ChatActivity : AppCompatActivity() {
 
 
 
-            mRef.child("mesajlar").child(sohbetEdilecekUserID).child(mesajGonderenUserID).push().setValue(mesajAlan)
+            mRef.child("mesajlar").child(sohbetEdilecekUserID).child(mesajGonderenUserID).child(yeniMesajKey.toString()).setValue(mesajAlan)
 
             var konusmaMesajAtan = HashMap<String, Any>()
             konusmaMesajAtan.put("time", ServerValue.TIMESTAMP)
@@ -87,57 +114,87 @@ class ChatActivity : AppCompatActivity() {
         }
     }
 
+    private fun dahaFazlaMesajGetir() {
+        //ilk getirilen ID aslında son gelecek olan IDdır. endAt ile sen getir butun mesajları ama ılk getirilene kdr getır yanı sondan 5. ye kadar. sonra onun ustunu getırıcz sureklı.
+        childListenerDahaFazla = mRef.child("mesajlar").child(mesajGonderenUserID).child(sohbetEdilecekUserID).orderByKey().endAt(ilkGetirilenMesajID)
+            .limitToLast(sayfaBasiGonderiSayisi).addChildEventListener(object : ChildEventListener {
+                override fun onCancelled(p0: DatabaseError) {
+
+                }
+
+                override fun onChildMoved(p0: DataSnapshot, p1: String?) {
+                    TODO("Not yet implemented")
+                }
+
+                override fun onChildChanged(p0: DataSnapshot, p1: String?) {
+                    TODO("Not yet implemented")
+                }
+
+                override fun onChildAdded(p0: DataSnapshot, p1: String?) {
+                    var okunanMesaj = p0.getValue(Mesaj::class.java)
+
+                    if (dahaFazlaMesajPosition == 0) {
+                        ilkGetirilenMesajID = p0.key.toString() // burada limittolast ile sondan 5. mesajın keyını aldık yukarıda o keyden oncekı 5 mesajı ısteyecegız.
+                    }
+
+                    tumMesajlar.add(dahaFazlaMesajPosition++,okunanMesaj!!)
+
+
+                    Log.e("kontrol", ilkGetirilenMesajID + " " + okunanMesaj.mesaj)
+
+
+                    myRecyclerViewAdapter.notifyDataSetChanged()
+                    myRecyclerView.scrollToPosition(sayfaBasiGonderiSayisi)
+                }
+
+                override fun onChildRemoved(p0: DataSnapshot) {
+
+                }
+
+            })
+
+    }
+
     private fun MesajlariGetir() {
 
         tumMesajlar.clear()
 
-/*
-       mRef.child("mesajlar").child(mesajGonderenUserID).child(sohbetEdilecekUserID).addValueEventListener(object : ValueEventListener {
-            override fun onCancelled(p0: DatabaseError) {
 
-            }
-
-            override fun onDataChange(p0: DataSnapshot) {
-
-                if (p0.value != null) {
-                    for (mesaj in p0.children) {
-
-                    }
-
-                    setupMesajlarRecyclerView()
+        childEventListener =
+            mRef.child("mesajlar").child(mesajGonderenUserID).child(sohbetEdilecekUserID).limitToLast(sayfaNumarasi * sayfaBasiGonderiSayisi).addChildEventListener(object : ChildEventListener {
+                override fun onCancelled(p0: DatabaseError) {
 
                 }
 
-            }
-        })
+                override fun onChildMoved(p0: DataSnapshot, p1: String?) {
 
-*/
-        mRef.child("mesajlar").child(mesajGonderenUserID).child(sohbetEdilecekUserID).addChildEventListener(object :ChildEventListener{
-            override fun onCancelled(p0: DatabaseError) {
+                }
 
-            }
+                override fun onChildChanged(p0: DataSnapshot, p1: String?) {
 
-            override fun onChildMoved(p0: DataSnapshot, p1: String?) {
+                }
 
-            }
+                override fun onChildAdded(p0: DataSnapshot, p1: String?) {
+                    var okunanMesaj = p0.getValue(Mesaj::class.java)
+                    tumMesajlar.add(okunanMesaj!!)
 
-            override fun onChildChanged(p0: DataSnapshot, p1: String?) {
 
-            }
+                    if (mesajPosition == 0) {
+                        ilkGetirilenMesajID = p0.key.toString() // burada limittolast ile sondan 5. mesajın keyını aldık yukarıda o keyden oncekı 5 mesajı ısteyecegız.
+                    }
+                    mesajPosition++
+                    Log.e("kontrol", ilkGetirilenMesajID + " " + okunanMesaj.mesaj)
 
-            override fun onChildAdded(p0: DataSnapshot, p1: String?) {
-                var okunanMesaj = p0.getValue(Mesaj::class.java)
-                tumMesajlar.add(okunanMesaj!!)
 
-                myRecyclerViewAdapter.notifyItemInserted(tumMesajlar.size-1)
-                myRecyclerView.scrollToPosition(tumMesajlar.size-1)
-            }
+                    myRecyclerViewAdapter.notifyDataSetChanged()
+                    myRecyclerView.scrollToPosition(tumMesajlar.size - 1)
+                }
 
-            override fun onChildRemoved(p0: DataSnapshot) {
+                override fun onChildRemoved(p0: DataSnapshot) {
 
-            }
+                }
 
-        })
+            })
 
 
     }

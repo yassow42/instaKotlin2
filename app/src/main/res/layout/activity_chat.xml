@@ -50,18 +50,26 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/mesajTitleCircleimg" />
 
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rvSohbet"
+    <com.dinuscxj.refresh.RecyclerRefreshLayout
+        android:id="@+id/refreshLayout"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginStart="1dp"
-        android:layout_marginEnd="1dp"
         app:layout_constraintBottom_toTopOf="@+id/view7"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/view11" />
+        app:layout_constraintTop_toBottomOf="@+id/view11">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvSohbet"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginStart="1dp"
+            android:layout_marginEnd="1dp"
+
+            />
+    </com.dinuscxj.refresh.RecyclerRefreshLayout>
+
+
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/mesajCircleimg"
@@ -82,8 +90,8 @@
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
         android:hint="Mesajın"
-        android:textSize="14sp"
         android:inputType="textMultiLine"
+        android:textSize="14sp"
         app:layout_constraintBottom_toBottomOf="@+id/mesajCircleimg"
         app:layout_constraintEnd_toStartOf="@+id/tvMesajGonderBtn"
         app:layout_constraintStart_toEndOf="@+id/mesajCircleimg"
@@ -110,7 +118,7 @@
         android:background="@color/golgelik"
         app:layout_constraintBottom_toTopOf="@+id/etMesaj"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"/>
+        app:layout_constraintStart_toStartOf="parent" />
 
     <ProgressBar
         android:id="@+id/mesajCirclePB"
@@ -121,8 +129,6 @@
         app:layout_constraintEnd_toEndOf="@+id/mesajCircleimg"
         app:layout_constraintStart_toStartOf="@+id/mesajCircleimg"
         app:layout_constraintTop_toTopOf="@+id/mesajCircleimg" />
-
-
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
