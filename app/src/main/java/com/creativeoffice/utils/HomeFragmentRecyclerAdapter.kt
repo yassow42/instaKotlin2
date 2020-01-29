@@ -1,6 +1,7 @@
 package com.creativeoffice.utils
 
 import android.content.Context
+import android.content.Intent
 import android.os.Build
 import android.text.Html
 import android.text.Spanned
@@ -9,12 +10,17 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import android.view.View
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.content.ContextCompat.startActivity
 import com.creativeoffice.Generic.CommentFragment
+import com.creativeoffice.Generic.UserProfileActivity
 import com.creativeoffice.Home.HomeActivity
+import com.creativeoffice.Home.HomeFragment
 import com.creativeoffice.Models.UserPost
+import com.creativeoffice.Profile.ProfileActivity
 
 import com.creativeoffice.instakotlin2.R
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
@@ -27,6 +33,7 @@ import kotlin.Comparator
 import kotlin.collections.ArrayList
 
 class HomeFragmentRecyclerAdapter(var myContext: Context, var tumGonderiler: ArrayList<UserPost>) : RecyclerView.Adapter<HomeFragmentRecyclerAdapter.MyViewHolder>() {
+
 
     init {//ilk calisan
 
@@ -56,6 +63,7 @@ class HomeFragmentRecyclerAdapter(var myContext: Context, var tumGonderiler: Arr
         holder.setData(position, tumGonderiler.get(position), myContext)
         holder.yorumlariGoruntule(tumGonderiler.get(position))
         holder.ciftTiklama(tumGonderiler.get(position))
+
 
     }
 
@@ -103,10 +111,25 @@ class HomeFragmentRecyclerAdapter(var myContext: Context, var tumGonderiler: Arr
 
             UniversalImageLoader.setImage(oankiGonderi.postUrl!!, postImage, progresPostFoto)
 
+            userNameTitle.setOnClickListener {
+
+                if (!oankiGonderi.userID!!.equals(FirebaseAuth.getInstance().currentUser!!.uid)){
+                    var intent  = Intent(myContext.applicationContext,UserProfileActivity::class.java).addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION)
+                    intent.putExtra("arananKullaniciID",oankiGonderi.userID.toString())
+                    myContext.startActivity(intent)
+                }else{
+                    var intent  = Intent(myContext.applicationContext,ProfileActivity::class.java).addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION)
+
+                    myContext.startActivity(intent)
+                }
+
+
+            }
 
             yorumYap.setOnClickListener {
 
                 yorumYapmaBtn(oankiGonderi, myContext)
+
 
             }
             yorumSayisi.setOnClickListener {

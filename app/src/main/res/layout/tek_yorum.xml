@@ -11,7 +11,7 @@
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="8dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/common_google_signin_btn_icon_dark_normal" />
@@ -21,13 +21,16 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
+        android:layout_marginTop="2dp"
         android:layout_marginEnd="8dp"
-        app:hashtagColor="@color/mavi"
-        app:mentionColor="@color/mavi"
         android:textColor="@color/siyah"
+        app:hashtagColor="@color/mavi"
+        app:layout_constraintBottom_toBottomOf="@+id/yorumYapanProfilPhoto"
         app:layout_constraintEnd_toStartOf="@+id/imgYorumLike"
         app:layout_constraintStart_toEndOf="@+id/yorumYapanProfilPhoto"
-        app:layout_constraintTop_toTopOf="@+id/yorumYapanProfilPhoto" />
+        app:layout_constraintTop_toTopOf="@+id/yorumYapanProfilPhoto"
+        app:layout_constraintVertical_bias="0.0"
+        app:mentionColor="@color/mavi" />
 
     <TextView
         android:id="@+id/tvYorumZaman"
@@ -63,7 +66,7 @@
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_marginTop="8dp"
-        android:layout_marginBottom="8dp"
+        android:layout_marginBottom="4dp"
         android:background="@color/golgelik"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

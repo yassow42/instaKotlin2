@@ -11,15 +11,15 @@
         android:layout_width="30dp"
         android:layout_height="30dp"
         android:layout_marginStart="8dp"
-        app:layout_constraintBottom_toBottomOf="@+id/imageView3"
-        app:layout_constraintStart_toEndOf="@+id/imageView3"
-        app:layout_constraintTop_toTopOf="@+id/imageView3">
+        app:layout_constraintBottom_toBottomOf="@+id/imgBack"
+        app:layout_constraintStart_toEndOf="@+id/imgBack"
+        app:layout_constraintTop_toTopOf="@+id/imgBack">
 
 
     </de.hdodenhof.circleimageview.CircleImageView>
 
     <ImageView
-        android:id="@+id/imageView3"
+        android:id="@+id/imgBack"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"

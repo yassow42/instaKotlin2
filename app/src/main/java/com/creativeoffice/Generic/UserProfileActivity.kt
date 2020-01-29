@@ -1,7 +1,7 @@
 package com.creativeoffice.Generic
 
 
-import android.content.Context
+
 import android.graphics.PorterDuff
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -26,6 +26,7 @@ class UserProfileActivity : AppCompatActivity() {
     private val ACTIVITY_NO = 4
 
     lateinit var secilenUserID: String
+    lateinit var gelenUserID: String
     lateinit var tumGonderiler: ArrayList<UserPost>
     lateinit var mAuth: FirebaseAuth
     lateinit var mUser: FirebaseUser
@@ -43,6 +44,9 @@ class UserProfileActivity : AppCompatActivity() {
 
         tumGonderiler = ArrayList()
         secilenUserID = intent.getStringExtra("arananKullaniciID")!!
+
+
+
         kullaniciBilgileriniGetir(secilenUserID)
         kullaniciPostlariniGetir(secilenUserID)
         setupButton()

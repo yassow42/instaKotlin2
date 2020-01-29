@@ -89,7 +89,7 @@ class MessagesFragment : Fragment() {
                             }
 
                             if (gelenKullaniciAdi.equals(kullanicilar.user_name.toString())) {
-                                Log.e("kişi uid3", kullanicilar.user_id.toString())
+                               // Log.e("kişi uid3", kullanicilar.user_id.toString())
 
                                 if (!kullanicilar.user_id.toString().equals(mAuth.currentUser!!.uid)) {
                                     var intent = Intent(activity, ChatActivity::class.java).addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION)
