@@ -16,7 +16,7 @@ public class TimeAgo {
 
         long now = System.currentTimeMillis();
         if (time > now || time <= 0) {
-            return null;
+            return "şimdi";
         }
 
         // TODO: localize
@@ -48,7 +48,7 @@ public class TimeAgo {
 
         long now = System.currentTimeMillis();
         if (time > now || time <= 0) {
-            return null;
+            return "şimdi";
         }
 
         // TODO: localize
@@ -62,7 +62,7 @@ public class TimeAgo {
         } else if (diff < 90 * MINUTE_MILLIS) {
             return "an hour ago";
         } else if (diff < 24 * HOUR_MILLIS) {
-            return diff / HOUR_MILLIS + " sss";
+            return diff / HOUR_MILLIS + " s";
         } else if (diff < 48 * HOUR_MILLIS) {
             return "Dün";
         } else {

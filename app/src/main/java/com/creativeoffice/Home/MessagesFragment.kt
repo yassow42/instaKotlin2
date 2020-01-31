@@ -29,8 +29,11 @@ class MessagesFragment : Fragment() {
     lateinit var myRecyclerView: RecyclerView
     lateinit var myLinearLayoutManager: LinearLayoutManager
     lateinit var myAdapter: KonusmalarRecyclerViewAdapter
+    lateinit var myListener: ChildEventListener
     lateinit var myFragmentView: View
     lateinit var mRef: DatabaseReference
+
+    var listenerAtandimi = false
 
 
     var tumKonusmalar: ArrayList<Konusmalar> = ArrayList<Konusmalar>()
@@ -111,96 +114,147 @@ class MessagesFragment : Fragment() {
                     }
 
                 })
-
-
             }
-
         }
 
-
         setupKonusmalarRecyclerView()
-
-
         return myFragmentView
     }
 
     private fun TumKonusmalariGetir() {
+        if (listenerAtandimi == false) {
+            listenerAtandimi ==true
+            myListener = mRef.child("konusmalar").child(mUser.uid).orderByChild("time").addChildEventListener(object : ChildEventListener {
+                override fun onCancelled(p0: DatabaseError) {
 
-        mRef.child("konusmalar").child(mUser.uid).orderByChild("time").addChildEventListener(object :ChildEventListener{
-            override fun onCancelled(p0: DatabaseError) {
+                }
 
-            }
+                override fun onChildMoved(p0: DataSnapshot, p1: String?) {
 
-            override fun onChildMoved(p0: DataSnapshot, p1: String?) {
+                }
 
-            }
+                override fun onChildChanged(p0: DataSnapshot, p1: String?) {
+                    // kontrol -1 ise yenı bır konusma lısteye eklenecek -den farklı ıse var olan konusmanın arraylısttekı posıtıon degerı gelecek.
+                    var kontrol = konusmaPositionBul(p0.key.toString())
+                    if (kontrol != -1) {
 
-            override fun onChildChanged(p0: DataSnapshot, p1: String?) {
-                var guncellenecekKonusma = p0.getValue(Konusmalar::class.java)!!
-                guncellenecekKonusma.user_id = p0.key.toString()
+                        var guncellenecekKonusma = p0.getValue(Konusmalar::class.java)!!
+                        guncellenecekKonusma.user_id = p0.key.toString()
 
-
-            }
-
-            override fun onChildAdded(p0: DataSnapshot, p1: String?) {
-                var eklenecekKonusma = p0.getValue(Konusmalar::class.java)!!
-
-                eklenecekKonusma.user_id = p0.key.toString()
-
-                tumKonusmalar.add(0,eklenecekKonusma)
-
-                myAdapter.notifyItemInserted(tumKonusmalar.size - 1)
-            }
-
-            override fun onChildRemoved(p0: DataSnapshot) {
-
-            }
-        })
+                        tumKonusmalar.removeAt(kontrol)
+                        myAdapter.notifyItemRemoved(kontrol)
+                        tumKonusmalar.add(0, guncellenecekKonusma)
+                        myAdapter.notifyItemInserted(0)
+                    }
 
 
+                }
 
+                override fun onChildAdded(p0: DataSnapshot, p1: String?) {
+
+                    var eklenecekKonusma = p0.getValue(Konusmalar::class.java)!!
+
+                    eklenecekKonusma.user_id = p0.key.toString()
+
+                    tumKonusmalar.add(0, eklenecekKonusma)
+
+                    myAdapter.notifyItemInserted(tumKonusmalar.size - 1)
+                }
+
+                override fun onChildRemoved(p0: DataSnapshot) {
+
+                }
+            })
+        }
     }
 
-    private var myListener: ChildEventListener = object : ChildEventListener {
-        override fun onCancelled(p0: DatabaseError) {
 
+    private fun konusmaPositionBul(userID: String?): Int {
+        for (i in 0..tumKonusmalar.size - 1) {
+            var gecici = tumKonusmalar.get(i)
+            if (gecici.user_id.equals(userID)) {
+                return i
+            }
         }
-
-        override fun onChildMoved(p0: DataSnapshot, p1: String?) {
-
-        }
-
-        override fun onChildChanged(p0: DataSnapshot, p1: String?) {
-
-        }
-
-        override fun onChildAdded(p0: DataSnapshot, p1: String?) {
-            var eklenecekKonusma = p0.getValue(Konusmalar::class.java)!!
-
-            eklenecekKonusma.user_id = p0.key.toString()
-
-            tumKonusmalar.add(eklenecekKonusma)
-
-            myAdapter.notifyItemInserted(tumKonusmalar.size - 1)
-        }
-
-        override fun onChildRemoved(p0: DataSnapshot) {
-
-        }
+        return -1
     }
 
 
     private fun setupKonusmalarRecyclerView() {
-
         myRecyclerView = myFragmentView.recyclerKonusmalar
-
         myLinearLayoutManager = LinearLayoutManager(context!!.applicationContext, LinearLayoutManager.VERTICAL, false)
-
         myAdapter = KonusmalarRecyclerViewAdapter(context!!.applicationContext, tumKonusmalar)
-
         myRecyclerView.layoutManager = myLinearLayoutManager
         myRecyclerView.adapter = myAdapter
-
         TumKonusmalariGetir()
     }
+
+
+    override fun onPause() {
+        super.onPause()
+        tumKonusmalar.clear()
+
+        if (listenerAtandimi == true) {
+            listenerAtandimi = false
+            myAdapter.notifyDataSetChanged()
+            mRef.removeEventListener(myListener)
+
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        tumKonusmalar.clear()
+        if (listenerAtandimi == false) {
+            listenerAtandimi = true
+            myAdapter.notifyDataSetChanged()
+
+  /*
+           mRef.child("konusmalar").child(mUser.uid).orderByChild("time").addChildEventListener(object : ChildEventListener {
+                override fun onCancelled(p0: DatabaseError) {
+
+                }
+
+                override fun onChildMoved(p0: DataSnapshot, p1: String?) {
+
+                }
+
+                override fun onChildChanged(p0: DataSnapshot, p1: String?) {
+                    // kontrol -1 ise yenı bır konusma lısteye eklenecek -den farklı ıse var olan konusmanın arraylısttekı posıtıon degerı gelecek.
+                    var kontrol = konusmaPositionBul(p0.key.toString())
+                    if (kontrol != -1) {
+
+                        var guncellenecekKonusma = p0.getValue(Konusmalar::class.java)!!
+                        guncellenecekKonusma.user_id = p0.key.toString()
+
+                        tumKonusmalar.removeAt(kontrol)
+                        myAdapter.notifyItemRemoved(kontrol)
+                        tumKonusmalar.add(0, guncellenecekKonusma)
+                        myAdapter.notifyItemInserted(0)
+                    }
+
+
+                }
+
+                override fun onChildAdded(p0: DataSnapshot, p1: String?) {
+
+                    var eklenecekKonusma = p0.getValue(Konusmalar::class.java)!!
+
+                    eklenecekKonusma.user_id = p0.key.toString()
+
+                    tumKonusmalar.add(0, eklenecekKonusma)
+
+                    myAdapter.notifyItemInserted(tumKonusmalar.size - 1)
+                }
+
+                override fun onChildRemoved(p0: DataSnapshot) {
+
+                }
+            })
+
+*/
+        }
+
+    }
+
 }

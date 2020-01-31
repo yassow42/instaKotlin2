@@ -11,8 +11,8 @@
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginBottom="16dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -22,6 +22,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
+        android:layout_marginTop="2dp"
         android:text="yassow42"
         android:textColor="@color/siyah"
         app:layout_constraintStart_toEndOf="@+id/imgUserProfilePicture"
@@ -29,12 +30,14 @@
 
     <TextView
         android:id="@+id/tvSonMesaj"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="16dp"
+        android:layout_marginTop="2dp"
+        android:layout_marginBottom="8dp"
+        android:maxWidth="280dp"
+        android:maxLines="2"
         android:text="En son atılan mesaj"
-        app:layout_constraintEnd_toStartOf="@+id/tvMesajZaman"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="@+id/tvUserName"
         app:layout_constraintTop_toBottomOf="@+id/tvUserName" />
 
@@ -42,10 +45,22 @@
         android:id="@+id/tvMesajZaman"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
         android:text="4s"
         app:layout_constraintBottom_toBottomOf="@+id/tvSonMesaj"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/tvSonMesaj"
         app:layout_constraintTop_toTopOf="@+id/tvSonMesaj" />
+
+    <ImageView
+        android:id="@+id/imageView5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/mavi_okunmadi_noktasi" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
