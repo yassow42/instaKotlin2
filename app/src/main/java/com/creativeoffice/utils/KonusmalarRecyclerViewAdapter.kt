@@ -1,7 +1,9 @@
 package com.creativeoffice.utils
 
 import android.content.Context
-import android.graphics.Color
+import android.content.Intent
+import android.content.Intent.FLAG_ACTIVITY_NEW_TASK
+import android.content.Intent.FLAG_ACTIVITY_NO_ANIMATION
 import android.graphics.Typeface
 
 import android.view.LayoutInflater
@@ -9,8 +11,10 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
+import com.creativeoffice.Home.ChatActivity
 import com.creativeoffice.Models.Konusmalar
 import com.creativeoffice.instakotlin2.R
+import com.google.firebase.auth.FirebaseAuth
 
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -30,8 +34,7 @@ class KonusmalarRecyclerViewAdapter(var myContext: Context, var tumKonusmalar: A
 
 
     override fun onBindViewHolder(holder: MyKonusmaHolder, position: Int) {
-       holder.setData(tumKonusmalar.get(position),holder)
-
+        holder.setData(tumKonusmalar.get(position), holder, myContext)
 
 
     }
@@ -53,23 +56,38 @@ class KonusmalarRecyclerViewAdapter(var myContext: Context, var tumKonusmalar: A
         var okunduBilgisi = tumLayout.imgOkunduBilgisi
 
 
-        fun setData(oankiKonusma: Konusmalar, holder: MyKonusmaHolder) {
+        fun setData(oankiKonusma: Konusmalar, holder: MyKonusmaHolder, myContext: Context) {
 
-           enSonMesaj.text = oankiKonusma.son_mesaj.toString()
+            enSonMesaj.text = oankiKonusma.son_mesaj.toString()
 
 
-           zaman.text = TimeAgo.getTimeAgoComments(oankiKonusma.time!!.toLong())
-            if (oankiKonusma.goruldu==false){
+            zaman.text = TimeAgo.getTimeAgoComments(oankiKonusma.time!!.toLong())
+            if (oankiKonusma.goruldu == false) {
                 okunduBilgisi.visibility = View.VISIBLE
-                sohbetEdilenUserName.setTypeface(null,Typeface.BOLD)
-                enSonMesaj.setTypeface(null,Typeface.BOLD)
+                sohbetEdilenUserName.setTypeface(null, Typeface.BOLD)
+                enSonMesaj.setTypeface(null, Typeface.BOLD)
 
 
-            }else{
+            } else {
                 okunduBilgisi.visibility = View.INVISIBLE
-                sohbetEdilenUserName.setTypeface(null,Typeface.NORMAL)
+                sohbetEdilenUserName.setTypeface(null, Typeface.NORMAL)
             }
 
+
+            tumLayout.setOnClickListener {
+
+                val intent = Intent(myContext, ChatActivity::class.java).addFlags(FLAG_ACTIVITY_NEW_TASK).addFlags(FLAG_ACTIVITY_NO_ANIMATION)
+                intent.putExtra("secilenUserID", oankiKonusma.user_id.toString())
+
+
+
+                FirebaseDatabase.getInstance().reference.child("konusmalar")
+                    .child(FirebaseAuth.getInstance().currentUser!!.uid)
+                    .child(oankiKonusma.user_id.toString())
+                    .child("goruldu").setValue(true).addOnCompleteListener {
+                        myContext.startActivity(intent)
+                    }
+            }
 
 
             FirebaseDatabase.getInstance().reference.child("users").child(oankiKonusma.user_id.toString()).addListenerForSingleValueEvent(object : ValueEventListener {
@@ -78,11 +96,11 @@ class KonusmalarRecyclerViewAdapter(var myContext: Context, var tumKonusmalar: A
                 }
 
                 override fun onDataChange(p0: DataSnapshot) {
-                    holder.sohbetEdilenUserName.text =  p0.child("user_name").value.toString()
+                    holder.sohbetEdilenUserName.text = p0.child("user_name").value.toString()
 
                     var imgUrl = p0.child("user_detail").child("profile_picture").value.toString()
 
-                    UniversalImageLoader.setImage(imgUrl,holder.sohbetEdilenProfilePic,null)
+                    UniversalImageLoader.setImage(imgUrl, holder.sohbetEdilenProfilePic, null)
 
                 }
 
@@ -92,10 +110,6 @@ class KonusmalarRecyclerViewAdapter(var myContext: Context, var tumKonusmalar: A
         }
 
     }
-
-
-
-
 
 
 }

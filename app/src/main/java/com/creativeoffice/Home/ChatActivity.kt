@@ -229,6 +229,8 @@ class ChatActivity : AppCompatActivity() {
                 }
                 mesajPos++
 
+                mesajGorulduBilgisiniGuncelle(p0.key.toString())
+
                 myRecyclerViewAdapter.notifyItemInserted(tumMesajlar.size-1)
                 myRecyclerView.scrollToPosition(tumMesajlar.size-1)
 
@@ -245,6 +247,13 @@ class ChatActivity : AppCompatActivity() {
 
 
 
+    }
+
+     fun mesajGorulduBilgisiniGuncelle(mesajID: String) {
+        FirebaseDatabase.getInstance().reference.child("mesajlar")
+            .child(mesajGonderenUserId)
+            .child(sohbetEdilecekUserId).child(mesajID)
+            .child("goruldu").setValue(true)
     }
 
     private fun setupMesajlarRecyclerView() {
@@ -287,5 +296,8 @@ class ChatActivity : AppCompatActivity() {
         })
 
     }
+
+
+
 
 }
