@@ -1,6 +1,8 @@
 package com.creativeoffice.utils
 
 import android.content.Context
+import android.graphics.Color
+import android.graphics.Typeface
 
 import android.view.LayoutInflater
 import android.view.View
@@ -48,6 +50,7 @@ class KonusmalarRecyclerViewAdapter(var myContext: Context, var tumKonusmalar: A
         var sohbetEdilenUserName = tumLayout.tvUserName
         var enSonMesaj = tumLayout.tvSonMesaj
         var zaman = tumLayout.tvMesajZaman
+        var okunduBilgisi = tumLayout.imgOkunduBilgisi
 
 
         fun setData(oankiKonusma: Konusmalar, holder: MyKonusmaHolder) {
@@ -56,6 +59,16 @@ class KonusmalarRecyclerViewAdapter(var myContext: Context, var tumKonusmalar: A
 
 
            zaman.text = TimeAgo.getTimeAgoComments(oankiKonusma.time!!.toLong())
+            if (oankiKonusma.goruldu==false){
+                okunduBilgisi.visibility = View.VISIBLE
+                sohbetEdilenUserName.setTypeface(null,Typeface.BOLD)
+                enSonMesaj.setTypeface(null,Typeface.BOLD)
+
+
+            }else{
+                okunduBilgisi.visibility = View.INVISIBLE
+                sohbetEdilenUserName.setTypeface(null,Typeface.NORMAL)
+            }
 
 
 
