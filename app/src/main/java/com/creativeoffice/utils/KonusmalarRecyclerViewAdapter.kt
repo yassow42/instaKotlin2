@@ -60,9 +60,15 @@ class KonusmalarRecyclerViewAdapter(var myContext: Context, var tumKonusmalar: A
 
             enSonMesaj.text = oankiKonusma.son_mesaj.toString()
 
+            if (oankiKonusma.son_mesaj.toString().length>35){
+                enSonMesaj.text = oankiKonusma.son_mesaj.toString().trim().substring(0,35) + "..."
+            }else{
+                enSonMesaj.text = oankiKonusma.son_mesaj.toString().trim()
+            }
 
             zaman.text = TimeAgo.getTimeAgoComments(oankiKonusma.time!!.toLong())
             if (oankiKonusma.goruldu == false) {
+
                 okunduBilgisi.visibility = View.VISIBLE
                 sohbetEdilenUserName.setTypeface(null, Typeface.BOLD)
                 enSonMesaj.setTypeface(null, Typeface.BOLD)

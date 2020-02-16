@@ -50,11 +50,12 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/mesajTitleCircleimg" />
 
+
     <com.dinuscxj.refresh.RecyclerRefreshLayout
         android:id="@+id/refreshLayout"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        app:layout_constraintBottom_toTopOf="@+id/view7"
+        app:layout_constraintBottom_toTopOf="@+id/yaziyorCons"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/view11">
@@ -68,8 +69,6 @@
 
             />
     </com.dinuscxj.refresh.RecyclerRefreshLayout>
-
-
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/mesajCircleimg"
@@ -129,6 +128,42 @@
         app:layout_constraintEnd_toEndOf="@+id/mesajCircleimg"
         app:layout_constraintStart_toStartOf="@+id/mesajCircleimg"
         app:layout_constraintTop_toTopOf="@+id/mesajCircleimg" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/yaziyorCons"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:layout_constraintBottom_toTopOf="@+id/view7"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/yaziyorCircleimg"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginBottom="4dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+
+        </de.hdodenhof.circleimageview.CircleImageView>
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:text="Yazıyor..."
+            android:textSize="12sp"
+            app:layout_constraintBottom_toBottomOf="@+id/yaziyorCircleimg"
+            app:layout_constraintStart_toEndOf="@+id/yaziyorCircleimg"
+            app:layout_constraintTop_toTopOf="@+id/yaziyorCircleimg"></TextView>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -3,6 +3,11 @@ package com.creativeoffice.Home
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextUtils
+import android.text.TextWatcher
+import android.util.Log
+import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.creativeoffice.Models.Mesaj
@@ -39,6 +44,7 @@ class ChatActivity : AppCompatActivity() {
 
     lateinit var childEventListener: ChildEventListener
     lateinit var childListenerDahaFazla: ChildEventListener
+    lateinit var yaziyorEventListener: ValueEventListener
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -92,44 +98,110 @@ class ChatActivity : AppCompatActivity() {
         tvMesajGonderBtn.setOnClickListener {
 
             var mesajText = etMesaj.text.toString()
-            var mesajAtan = HashMap<String, Any>()
-            mesajAtan.put("mesaj", mesajText)
-            mesajAtan.put("goruldu", true)
-            mesajAtan.put("time", ServerValue.TIMESTAMP)
-            mesajAtan.put("type", "text")
-            mesajAtan.put("user_id", mesajGonderenUserId)
+
+            if (!TextUtils.isEmpty(mesajText)) {
+                var mesajAtan = HashMap<String, Any>()
+                mesajAtan.put("mesaj", mesajText)
+                mesajAtan.put("goruldu", true)
+                mesajAtan.put("time", ServerValue.TIMESTAMP)
+                mesajAtan.put("type", "text")
+                mesajAtan.put("user_id", mesajGonderenUserId)
 
 
-            var yeniMesajKey = mRef.child("mesajlar").child(mesajGonderenUserId).child(sohbetEdilecekUserId).push().key
-            mRef.child("mesajlar").child(mesajGonderenUserId).child(sohbetEdilecekUserId).child(yeniMesajKey.toString()).setValue(mesajAtan)
+                var yeniMesajKey = mRef.child("mesajlar").child(mesajGonderenUserId).child(sohbetEdilecekUserId).push().key
+                mRef.child("mesajlar").child(mesajGonderenUserId).child(sohbetEdilecekUserId).child(yeniMesajKey.toString()).setValue(mesajAtan)
 
 
-            var mesajAlan = HashMap<String, Any>()
-            mesajAlan.put("mesaj", mesajText)
-            mesajAlan.put("goruldu", false)
-            mesajAlan.put("time", ServerValue.TIMESTAMP)
-            mesajAlan.put("type", "text")
-            mesajAlan.put("user_id", mesajGonderenUserId)
+                var mesajAlan = HashMap<String, Any>()
+                mesajAlan.put("mesaj", mesajText)
+                mesajAlan.put("goruldu", false)
+                mesajAlan.put("time", ServerValue.TIMESTAMP)
+                mesajAlan.put("type", "text")
+                mesajAlan.put("user_id", mesajGonderenUserId)
 
 
 
-            mRef.child("mesajlar").child(sohbetEdilecekUserId).child(mesajGonderenUserId).child(yeniMesajKey.toString()).setValue(mesajAlan)
+                mRef.child("mesajlar").child(sohbetEdilecekUserId).child(mesajGonderenUserId).child(yeniMesajKey.toString()).setValue(mesajAlan)
 
-            var konusmaMesajAtan = HashMap<String, Any>()
-            konusmaMesajAtan.put("time", ServerValue.TIMESTAMP)
-            konusmaMesajAtan.put("goruldu", true)
-            konusmaMesajAtan.put("son_mesaj", mesajText)
-            mRef.child("konusmalar").child(mesajGonderenUserId).child(sohbetEdilecekUserId).setValue(konusmaMesajAtan)
+                var konusmaMesajAtan = HashMap<String, Any>()
+                konusmaMesajAtan.put("time", ServerValue.TIMESTAMP)
+                konusmaMesajAtan.put("goruldu", true)
+                konusmaMesajAtan.put("son_mesaj", mesajText)
+                konusmaMesajAtan.put("typing", false)
 
-            var konusmaMesajAlan = HashMap<String, Any>()
-            konusmaMesajAlan.put("time", ServerValue.TIMESTAMP)
-            konusmaMesajAlan.put("goruldu", false)
-            konusmaMesajAlan.put("son_mesaj", mesajText)
+                mRef.child("konusmalar").child(mesajGonderenUserId).child(sohbetEdilecekUserId).setValue(konusmaMesajAtan)
+                var konusmaMesajAlan = HashMap<String, Any>()
+                konusmaMesajAlan.put("time", ServerValue.TIMESTAMP)
+                konusmaMesajAlan.put("goruldu", false)
+                konusmaMesajAlan.put("son_mesaj", mesajText)
+                konusmaMesajAlan.put("typing", false)
 
-            mRef.child("konusmalar").child(sohbetEdilecekUserId).child(mesajGonderenUserId).setValue(konusmaMesajAlan)
+                mRef.child("konusmalar").child(sohbetEdilecekUserId).child(mesajGonderenUserId).setValue(konusmaMesajAlan)
 
-            etMesaj.setText("")
+                etMesaj.setText("")
+
+            }
+
         }
+
+        etMesaj.addTextChangedListener(object : TextWatcher {
+            var typing = false
+            override fun afterTextChanged(p0: Editable?) {
+                if (!TextUtils.isEmpty(p0.toString()) && p0!!.toString().trim().length == 1) {
+                    typing = true
+                    FirebaseDatabase.getInstance().reference.child("konusmalar").child(mesajGonderenUserId).child(sohbetEdilecekUserId).child("typing").setValue(true)
+
+                } else if (typing && p0!!.toString().toString().trim().length == 0) {
+                    typing = false
+                    FirebaseDatabase.getInstance().reference.child("konusmalar").child(mesajGonderenUserId).child(sohbetEdilecekUserId).child("typing").setValue(false)
+                    Log.e("kontrol", "Kullanıcı yazmaya bıraktı.")
+                }
+            }
+
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+
+
+            }
+
+        })
+
+      yaziyorEventListener=  FirebaseDatabase.getInstance().reference
+          .child("konusmalar").child(sohbetEdilecekUserId).child(mesajGonderenUserId).child("typing")
+          .addValueEventListener(object :ValueEventListener{
+            override fun onCancelled(p0: DatabaseError) {
+
+            }
+
+            override fun onDataChange(p0: DataSnapshot) {
+               if (p0.value==true){
+
+                   yaziyorCons.visibility = View.VISIBLE
+                   FirebaseDatabase.getInstance().reference.child("users").child(sohbetEdilecekUserId).child("user_detail").child("profile_picture")
+                       .addListenerForSingleValueEvent(object :ValueEventListener{
+                           override fun onCancelled(p0: DatabaseError) {
+
+                           }
+
+                           override fun onDataChange(p0: DataSnapshot) {
+                               var imgUrl = p0.value.toString()
+                               UniversalImageLoader.setImage(imgUrl,yaziyorCircleimg,null)
+                           }
+
+                       })
+
+
+               }else if (p0.value==false){
+                   yaziyorCons.visibility = View.GONE
+
+               }
+            }
+
+        })
+
         imgBack.setOnClickListener {
             onBackPressed()
         }
@@ -250,7 +322,6 @@ class ChatActivity : AppCompatActivity() {
                 FirebaseDatabase.getInstance().reference.child("konusmalar").child(mesajGonderenUserId).child(sohbetEdilecekUserId).child("goruldu").setValue(true)
             }
     }
-
 
 
     private fun setupMesajlarRecyclerView() {
